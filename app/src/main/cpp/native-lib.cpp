@@ -33,19 +33,23 @@ Java_com_example_controldmx_MainActivity_stringFromJNI( //appdi04 est le nom de 
     serveurAJoindre.sin_port = htons(m_portServeur);
     int resultat = connect(m_maSocket, (const struct sockaddr *) &serveurAJoindre, sizeof(serveurAJoindre));
     if(resultat != 0) {
-        message = "Connextion au serveur : ERREUR.";
+        message = "Connection au serveur : ERREUR.";
         return env->NewStringUTF(message.c_str());
     }
+
+    int *tableau=env->GetIntArrayElements(trame,NULL);
+    const char *chaine=env-> GetStringUTFChars(edit,NULL);
+    sprintf((char*)chaine,"%s %d %d",chaine,tableau[0],tableau[1]);
+
+
     message= message+"\nconnecté au serveur";
-    std::string messageAEnvoyer="message du client"; // sera remplacer par les 512 octets de la trame DMX : stockés dans un tableau de char
+    std::string messageAEnvoyer=chaine; // sera remplacer par les 512 octets de la trame DMX : stockés dans un tableau de char
     resultat = send(m_maSocket, messageAEnvoyer.c_str(), messageAEnvoyer.length(), 0);
     if (resultat == -1)
     {   message = message+"\nEnvoi du message : ERREUR.";
         return env -> NewStringUTF(message.c_str());
     }
-    int *tableau=env->GetIntArrayElements(trame,NULL);
-    const char *chaine=env-> GetStringUTFChars(edit,NULL);
-    sprintf((char*)chaine,"%s %d %d",chaine,tableau[0],tableau[1]);
+
     return env->NewStringUTF(chaine); //message.c_str(),
     //return env->NewStringUTF(message.c_str());
 }

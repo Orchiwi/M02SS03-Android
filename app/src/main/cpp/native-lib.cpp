@@ -4,6 +4,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <netdb.h>
+#include "string.h"
 
 // extern "C" JNIEXPORT jstring JNICALL
 // Java_com_example_controldmx_MainActivity_stringFromJNI(
@@ -15,9 +16,10 @@
 extern "C" JNIEXPORT jstring JNICALL
 Java_com_example_controldmx_MainActivity_stringFromJNI( //appdi04 est le nom de l'application
     JNIEnv* env,
-    jobject /* this*/ ) {
+    jobject,
+    jstring edit, jintArray trame) {
     std::string message;
-    std::string m_adresseIPServeur = "172.20.21.17"; //à modifier
+    std::string m_adresseIPServeur = "93.5.164.52"; //à modifier
     int m_portServeur = 17777;                //à modifier
     int m_maSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if(m_maSocket == -1)
@@ -41,5 +43,19 @@ Java_com_example_controldmx_MainActivity_stringFromJNI( //appdi04 est le nom de 
     {   message = message+"\nEnvoi du message : ERREUR.";
         return env -> NewStringUTF(message.c_str());
     }
-    return env->NewStringUTF(message.c_str());
+    int *tableau=env->GetIntArrayElements(trame,NULL);
+    const char *chaine=env-> GetStringUTFChars(edit,NULL);
+    sprintf((char*)chaine,"%s %d %d",chaine,tableau[0],tableau[1]);
+    return env->NewStringUTF(chaine); //message.c_str(),
+    //return env->NewStringUTF(message.c_str());
 }
+/*extern "C" JNIEXPORT jstring JNICALL
+Java_com_example_controldmx_MainActivity_stringFromJNI(
+        JNIEnv* env,
+        jobject,
+        jstring edit, jintArray trame) {
+    int *tableau=env->GetIntArrayElements(trame,NULL);
+    const char *chaine=env-> GetStringUTFChars(edit,NULL);
+    sprintf((char*))chaine,"%s %d %d",chaine,tableau[0],tableau[1]);
+    return env->NewStringUTF(chaine);
+    }*/

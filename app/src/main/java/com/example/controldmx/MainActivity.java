@@ -72,6 +72,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import com.example.controldmx.databinding.ActivityMainBinding;
 import com.google.android.material.textfield.TextInputEditText;
@@ -88,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         Button button1=(Button) findViewById(R.id.button);
         TextInputEditText text=(TextInputEditText)findViewById(R.id.textInputEditText);
-        SeekBar seekBar=(SeekBar)findViewById(R.id.seekBar);
+        SeekBar seekbar=(SeekBar)findViewById(R.id.seekBar);
         SeekBar seekbar2=(SeekBar)findViewById(R.id.seekBar2);
         int [] trameDMX= {1,2,0,0,0,0,0,0,0,0};
         button1.setOnClickListener(new View.OnClickListener() {
@@ -98,16 +99,40 @@ public class MainActivity extends AppCompatActivity {
                 tv.setText(stringFromJNI(text.getText().toString(),trameDMX));
             }
         });
-        seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        seekbar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
             @Override
-            public void onstopTrackingTouch(SeekBar seekBar) {
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                // Code à exécuter lorsqu'il y a un changement de progression
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // Code à exécuter lorsque l'utilisateur commence à toucher la SeekBar
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                // Code à exécuter lorsque l'utilisateur arrête de toucher la SeekBar
                 trameDMX[0]=seekBar.getProgress();
                 binding.sampleText.setText(String.valueOf(trameDMX[0]));
             }
         });
-        seekbar2.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
+        seekbar2.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                // Code à exécuter lorsqu'il y a un changement de progression
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // Code à exécuter lorsque l'utilisateur commence à toucher la SeekBar
+            }
+
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+                // Code à exécuter lorsque l'utilisateur arrête de toucher la SeekBar
                 trameDMX[1]=seekBar.getProgress();
                 binding.sampleText.setText(String.valueOf(trameDMX[1]));
             }

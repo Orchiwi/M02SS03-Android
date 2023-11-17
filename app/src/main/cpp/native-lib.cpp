@@ -38,13 +38,16 @@ Java_com_example_controldmx_MainActivity_stringFromJNI( //appdi04 est le nom de 
     }
 
     int *tableau=env->GetIntArrayElements(trame,NULL);
-    const char *chaine=env-> GetStringUTFChars(edit,NULL);
-    sprintf((char*)chaine,"%s %d %d %d %d %d %d %d %d %d %d ",chaine,tableau[0],tableau[1],tableau[2],tableau[3],tableau[4],tableau[5],tableau[6],tableau[7],tableau[8],tableau[9]);
+    const char buf[512];
+    for(int i=0;i<10;i++) buf[i]=tableau[i];
+    //const char *chaine=env-> GetStringUTFChars(edit,NULL);
+    //sprintf((char*)chaine,"%s %d %d %d %d %d %d %d %d %d %d ",chaine,tableau[0],tableau[1],tableau[2],tableau[3],tableau[4],tableau[5],tableau[6],tableau[7],tableau[8],tableau[9]);
 
 
     message= message+"\nconnecté au serveur";
-    std::string messageAEnvoyer=chaine; // sera remplacer par les 512 octets de la trame DMX : stockés dans un tableau de char
-    resultat = send(m_maSocket, messageAEnvoyer.c_str(), messageAEnvoyer.length(), 0);
+    //std::string messageAEnvoyer=chaine; // sera remplacer par les 512 octets de la trame DMX : stockés dans un tableau de char
+    //resultat = send(m_maSocket, messageAEnvoyer.c_str(), messageAEnvoyer.length(), 0);
+    resultat = send(m_maSocket, buf.c_str(), 512, 0);
     if (resultat == -1)
     {   message = message+"\nEnvoi du message : ERREUR.";
         return env -> NewStringUTF(messageAEnvoyer.c_str());

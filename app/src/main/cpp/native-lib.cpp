@@ -19,7 +19,7 @@ Java_com_example_controldmx_MainActivity_stringFromJNI( //appdi04 est le nom de 
     jobject,
     jstring edit, jintArray trame) {
     std::string message;
-    std::string m_adresseIPServeur = "93.5.164.52"; //à modifier
+    std::string m_adresseIPServeur = "172.20.21.49"; //à modifier
     int m_portServeur = 17777;                //à modifier
     int m_maSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if(m_maSocket == -1)

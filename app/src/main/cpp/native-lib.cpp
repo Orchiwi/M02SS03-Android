@@ -20,7 +20,7 @@ Java_com_example_controldmx_MainActivity_stringFromJNI( //appdi04 est le nom de 
     jstring edit, jintArray trame) {
     std::string message;
     std::string m_adresseIPServeur = "172.20.21.49"; //à modifier
-    int m_portServeur = 17777;                //à modifier
+    int m_portServeur = 4123;                //à modifier
     int m_maSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if(m_maSocket == -1)
     {   message="Creation de la socket : ERREUR.";
@@ -39,7 +39,7 @@ Java_com_example_controldmx_MainActivity_stringFromJNI( //appdi04 est le nom de 
 
     int *tableau=env->GetIntArrayElements(trame,NULL);
     const char *chaine=env-> GetStringUTFChars(edit,NULL);
-    sprintf((char*)chaine,"%s %d %d",chaine,tableau[0],tableau[1]);
+    sprintf((char*)chaine,"%s %d %d %d %d %d %d %d %d %d %d ",chaine,tableau[0],tableau[1],tableau[2],tableau[3],tableau[4],tableau[5],tableau[6],tableau[7],tableau[8],tableau[9]);
 
 
     message= message+"\nconnecté au serveur";
@@ -47,7 +47,7 @@ Java_com_example_controldmx_MainActivity_stringFromJNI( //appdi04 est le nom de 
     resultat = send(m_maSocket, messageAEnvoyer.c_str(), messageAEnvoyer.length(), 0);
     if (resultat == -1)
     {   message = message+"\nEnvoi du message : ERREUR.";
-        return env -> NewStringUTF(message.c_str());
+        return env -> NewStringUTF(messageAEnvoyer.c_str());
     }
 
     return env->NewStringUTF(chaine); //message.c_str(),

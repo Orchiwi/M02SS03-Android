@@ -1,0 +1,5 @@
+IP		172.20.180.229
+Port		6454
+Univers		0
+tempo(ms)	1000
+fichierTest	test.txt

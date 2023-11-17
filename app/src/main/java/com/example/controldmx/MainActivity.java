@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         SeekBar seekbar10=(SeekBar)findViewById(R.id.seekBar10);
 
 
-        int [] trameDMX= {1,2,3,4,5,6,7,8,9,10};
+        int [] trameDMX= {1,2,3,4,5,6,7,8,9,0};
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
